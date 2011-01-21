@@ -80,9 +80,9 @@
       $.extend(settings, options);
     }
 
-    var $itemsDiv = $nl.children(settings.itemsDiv); // grab div with items in it
-    var $items = $nl.children().children(settings.item); // grab all items
-    var $controlsDiv = $nl.children(settings.controlsDiv); // grab div with control links
+    var $itemsDiv = $nl.find(settings.itemsDiv); // grab div with items in it
+    var $items = $nl.find(settings.item); // grab all items
+    var $controlsDiv = $nl.find(settings.controlsDiv); // grab div with control links
         
     // attach ids to all items
     var i = 1;
