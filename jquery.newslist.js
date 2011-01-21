@@ -64,7 +64,7 @@
 
     var $nl = $(container);
     
-    var settings = {
+    var defaults = {
       'itemsDiv'       	: '.items',
       'item'           	: '.item',
       'controlsDiv'    	: '.controls',
@@ -78,7 +78,7 @@
 
     // customize settings if args exist
     if (options) {
-      $.extend(settings, options);
+      settings = $.extend({}, defaults, options);
     }
 
     var $itemsDiv = $nl.find(settings.itemsDiv); // grab div with items in it
