@@ -1,0 +1,45 @@
+h1. News List
+
+*News List* is a jQuery plugin that transforms a simple HTML group of news items into an auto-cycling slideshow that can also be manipulated manually to show an individual item.
+
+h2. Usage
+
+First, include the jQuery library, <code>jquery.newslist.js</code>, <code>newslist.css</code> in your <code><head></code> tag:
+<pre>
+<link type="text/css" href="css/newslist.css" rel="stylesheet" media="screen"/>
+<script type="text/javascript" src="jquery.newslist.js"></script>
+</pre>
+
+Then create a simple HTML structure like so:
+<pre>
+<div id="newslist">
+ 	<div class="items">
+   	<div class="item">News item #1.</div>
+	 	<div class="item">News item #2.</div>
+	 	<div class="item">News item #3.</div>
+	 	<div class="item">News item #4.</div>
+  </div>
+  <div class="controls"></div>
+</div>
+</pre>
+
+Finish by calling the newslist function on the outermost element:
+<pre>
+<script type="text/javascript">
+	$("#newslist").newslist();
+</script>
+</pre>
+
+And huzzah, the magic is done.
+
+h2. Options
+
+* *itemsDiv*: the div containing the news items. Defaults to ".items".
+* *item*: the class for the div containing an individual news item. Defaults to ".item".
+* *controlsDiv*: the div where the control links for each news item will be created. Defaults to ".controls".
+* *cycler*: is the auto-cycling of news items on? Defaults to "true".
+* *hoverClass*: class for links that are active/on. Defaults to "on".
+* *cycleSpeed*: how fast, in milliseconds, the news items should cycle. Defaults to "10000".
+* *fadeSpeed*: how fast, in milliseconds, each new news item should fade in. Defaults to "1000".
+* *maxLoops*: how many times all of the news items should loop. If null, will loop indefinitely. Defaults to "null".
+* *leadZero*: should control links have a leading zero for numbers 1-9? Defaults to "false".
