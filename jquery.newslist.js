@@ -115,11 +115,8 @@
     );
         
     // load first news item
-    $items.hide();
-    $items.eq(0).fadeIn(settings.fadeSpeed);
-    $controls.eq(0).addClass("current");
-    $itemsDiv.css("overflow", "hidden");
-        
+		loadFirstItem(settings, $items, $controls, $itemsDiv);
+       
     // start the cycle of items
     cycleItems(settings, $items, $controls, $controls.eq(0), 0);
 
@@ -128,6 +125,14 @@
   /****************************/
   /* Item slideshow functions */
   /****************************/
+
+	// initial load
+	function loadFirstItem(settings, $items, $controls, $itemsDiv) {
+		$items.hide();
+    $items.eq(0).fadeIn(settings.fadeSpeed);
+    $controls.eq(0).addClass("current");
+    $itemsDiv.css("overflow", "hidden");
+	}
 
   // manual: click control link to change item; interrupts auto
   function changeItemTo(settings, $items, $controls, link) {
