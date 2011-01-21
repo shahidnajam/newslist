@@ -154,7 +154,7 @@
     // turn off cycler
     settings.cycler = false;
     $items.hide();
-    $items.filter("#item" + link.attr("rel")).fadeIn(settings.fadeSpeed);
+    $items.eq(link.index()).fadeIn(settings.fadeSpeed);
     $controls.removeClass("current");
     link.addClass("current");
   
