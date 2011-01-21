@@ -109,7 +109,7 @@
         // turn off cycler
         $cycler.attr('value', 'false');
         // change current item to one associated with control link clicked
-        $.changeItemTo($items, $controls, $(this), settings.fadeSpeed);
+        changeItemTo($items, $controls, $(this), settings.fadeSpeed);
       });
     });
         
@@ -132,7 +132,7 @@
     $cycler.attr('value', 'true');
         
     // start the cycle of items
-    $.cycleItems($items, $controls, $controls.eq(0), $cycler, settings.fadeSpeed, settings.cycleSpeed, 0, maxLoops);
+    cycleItems($items, $controls, $controls.eq(0), $cycler, settings.fadeSpeed, settings.cycleSpeed, 0, maxLoops);
 
   };
 
@@ -141,17 +141,17 @@
   /****************************/
 
   // manual: click control link to change item; interrupts auto
-  $.changeItemTo = function($items, $controls, link, fadeSpeed) {
+  function changeItemTo($items, $controls, link, fadeSpeed) {
     
     $items.hide();
     $items.filter("#item" + link.attr("rel")).fadeIn(fadeSpeed);
     $controls.removeClass("current");
     link.addClass("current");
   
-  };
+  }
 
   // auto: cycle items
-  $.cycleItems = function($items, $controls, $curControl, $cycler, fadeSpeed, cycleSpeed, curLoop, maxLoops) {
+  function cycleItems($items, $controls, $curControl, $cycler, fadeSpeed, cycleSpeed, curLoop, maxLoops) {
 
     setTimeout(function() {          
       if ( ((curLoop < maxLoops) || (maxLoops == -1)) && ($cycler.attr('value') !== 'false') ) {
@@ -173,7 +173,7 @@
         $controls.filter("#control" + nextItemId).addClass("current");
 
         // recursively call function again
-        $.cycleItems($items, $controls, $controls.eq(curItemId), $cycler, fadeSpeed, cycleSpeed, curLoop + 1, maxLoops);
+        cycleItems($items, $controls, $controls.eq(curItemId), $cycler, fadeSpeed, cycleSpeed, curLoop + 1, maxLoops);
       }
     }, cycleSpeed);
   };
