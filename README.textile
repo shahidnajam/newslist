@@ -6,8 +6,8 @@ h2. Usage
 
 First, include the jQuery library, <code>jquery.newslist.js</code>, <code>newslist.css</code> in your <code><head></code> tag:
 
-<code><link type="text/css" href="css/newslist.css" rel="stylesheet" media="screen"/>
-<script type="text/javascript" src="jquery.newslist.js"></script></code>
+<code><link type="text/css" href="/css/newslist.css" rel="stylesheet" media="screen"/>
+<script type="text/javascript" src="/js/jquery.newslist.js"></script></code>
 
 Then create a simple HTML structure like so:
 
