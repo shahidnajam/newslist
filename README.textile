@@ -6,13 +6,12 @@ h2. Usage
 
 First, include the jQuery library, <code>jquery.newslist.js</code>, <code>newslist.css</code> in your <code><head></code> tag:
 
-<code><link type="text/css" href="/css/newslist.css" rel="stylesheet" media="screen"/>
-<script type="text/javascript" src="/js/jquery.newslist.js"></script></code>
+<pre><code><link type="text/css" href="/css/newslist.css" rel="stylesheet" media="screen"/>
+<script type="text/javascript" src="/js/jquery.newslist.js"></script></code></pre>
 
 Then create a simple HTML structure like so:
 
-<pre><code>
-<div id="newslist">
+<pre><code><div id="newslist">
   <div class="items">
     <div class="item">News item #1.</div>
     <div class="item">News item #2.</div>
@@ -25,8 +24,7 @@ Then create a simple HTML structure like so:
 
 Finish by calling the newslist function on the outermost element:
 
-<pre><code>
-<script type="text/javascript">
+<pre><code><script type="text/javascript">
   $("#newslist").newslist();
 </script>
 </code></pre>
