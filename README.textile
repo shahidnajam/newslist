@@ -5,30 +5,31 @@ h1. News List
 h2. Usage
 
 First, include the jQuery library, <code>jquery.newslist.js</code>, <code>newslist.css</code> in your <code><head></code> tag:
-<pre>
-<link type="text/css" href="css/newslist.css" rel="stylesheet" media="screen"/>
-<script type="text/javascript" src="jquery.newslist.js"></script>
-</pre>
+
+<code><link type="text/css" href="css/newslist.css" rel="stylesheet" media="screen"/>
+<script type="text/javascript" src="jquery.newslist.js"></script></code>
 
 Then create a simple HTML structure like so:
-<pre>
+
+<pre><code>
 <div id="newslist">
- 	<div class="items">
-   	<div class="item">News item #1.</div>
-	 	<div class="item">News item #2.</div>
-	 	<div class="item">News item #3.</div>
-	 	<div class="item">News item #4.</div>
+  <div class="items">
+    <div class="item">News item #1.</div>
+    <div class="item">News item #2.</div>
+    <div class="item">News item #3.</div>
+    <div class="item">News item #4.</div>
   </div>
   <div class="controls"></div>
 </div>
-</pre>
+</code></pre>
 
 Finish by calling the newslist function on the outermost element:
-<pre>
+
+<pre><code>
 <script type="text/javascript">
-	$("#newslist").newslist();
+  $("#newslist").newslist();
 </script>
-</pre>
+</code></pre>
 
 And huzzah, the magic is done.
 
