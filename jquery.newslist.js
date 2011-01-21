@@ -4,10 +4,12 @@
  * @url http://nebyooweb.com
  * @url http://github.com/nebyoolae/newslist
  * @license Licensed under the MIT License
- * @description jQuery plugin that presents multiple news items in an auto-cycling slideshow with additional manual control
- */
+ * @description jQuery plugin for auto-cycling multiple news item slideshow with additional manual control
+ *
+**/
 
-/* News List is a simple way to display a list of items in a auto-cycling slideshow.
+/*
+ * News List is a simple way to display a list of items in a auto-cycling slideshow.
  * By calling the newslist() method on an element with the correct structure shown
  * below, control links will be automatically created. Items will fade in and out 
  * over a configurable amount of time, but any individual item can be chosen manually,
@@ -61,18 +63,17 @@
   $.init = function(container, options) {
 
     var $nl = $(container);
-		var cycler = true;
     
     var settings = {
-      'itemsDiv'       : '.items',
-      'item'           : '.item',
-      'controlsDiv'    : '.controls',
-      'cycler'         : true,
-      'hoverClass'     : 'on', 
-      'cycleSpeed'     : 10000,
-      'fadeSpeed'      : 1000,
-      'maxLoops'       : null,      
-      'leadZero'       : false            
+      'itemsDiv'       	: '.items',
+      'item'           	: '.item',
+      'controlsDiv'    	: '.controls',
+      'cycler'         	: true,
+      'hoverClass'     	: 'on', 
+      'cycleSpeed'     	: 10000,
+      'fadeSpeed'      	: 1000,
+      'maxLoops'       	: null,      
+      'leadZero'       	: false
     };
 
     // customize settings if args exist
@@ -83,7 +84,13 @@
     var $itemsDiv = $nl.find(settings.itemsDiv); // grab div with items in it
     var $items = $nl.find(settings.item); // grab all items
     var $controlsDiv = $nl.find(settings.controlsDiv); // grab div with control links
-        
+    
+		var cycleOps = {
+			'init'				  	: 1,
+			'cur'							: 1,
+			'total'						: settings.maxLoops * $items.length-1
+		};
+  
     // attach ids to all items
     var i = 1;
     $items.each(function() {
@@ -116,9 +123,14 @@
         
     // load first news item
 		loadFirstItem(settings, $items, $controls, $itemsDiv);
-       
+    
     // start the cycle of items
-    cycleItems(settings, $items, $controls, $controls.eq(0), 0);
+		setIntervalID = setInterval(
+			function() {
+				cycleItems(settings, cycleOps, $items, $controls);
+			}, 
+			settings.cycleSpeed
+		);
 
   };
 
@@ -128,10 +140,12 @@
 
 	// initial load
 	function loadFirstItem(settings, $items, $controls, $itemsDiv) {
+		
 		$items.hide();
     $items.eq(0).fadeIn(settings.fadeSpeed);
     $controls.eq(0).addClass("current");
     $itemsDiv.css("overflow", "hidden");
+	
 	}
 
   // manual: click control link to change item; interrupts auto
@@ -147,34 +161,31 @@
   }
 
   // auto: cycle items
-  function cycleItems(settings, $items, $controls, $curControl, curLoop) {
+  function cycleItems(settings, cycleOps, $items, $controls) {
 
-		console.log("curLoop", curLoop);
-		console.log("maxLoops", settings.maxLoops * $items.length-1);
+		var nextItemId;
 
-    setTimeout(function() {          
-      if ( ((curLoop < (settings.maxLoops * $items.length-1)) || (settings.maxLoops == null)) && settings.cycler ) {
-        var curItemId = parseInt($curControl.attr("rel"));
-        var nextItemId = curItemId + 1;
+    if ( ((cycleOps.cur <= cycleOps.total) || (settings.maxLoops == null)) && settings.cycler ) {
+      nextItemId = cycleOps.init + 1;
 
-        if (nextItemId > $items.length) {                  
-          nextItemId = 1;                   
-          curItemId = 0;
-        }
-
-        $items.hide();
-
-        // show next item in list
-        $items.filter("#item" + nextItemId).fadeIn(settings.fadeSpeed);
-        // remove highlight of all controls
-        $controls.removeClass("current");
-        // add it to the next one
-        $controls.filter("#control" + nextItemId).addClass("current");
-
-        // recursively call function again
-        cycleItems(settings, $items, $controls, $controls.eq(curItemId), curLoop + 1);
+      if (nextItemId > $items.length) {              
+        nextItemId = 1;
+				cycleOps.init = 0;
       }
-    }, settings.cycleSpeed);
+			
+			// hide all items, and then show next item in list
+      $items.hide();
+      $items.filter("#item" + nextItemId).fadeIn(settings.fadeSpeed);
+
+      // remove highlight of all controls and then add it to the next control in list
+      $controls.removeClass("current");
+      $controls.filter("#control" + nextItemId).addClass("current");
+			
+			cycleOps.init++;
+			cycleOps.cur++;
+    } else {
+			clearInterval(setIntervalID);
+		}
   
 	}
 
