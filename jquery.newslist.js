@@ -22,7 +22,7 @@
  *     'itemsDiv'       : '.items',     // class of news items container
  *     'item'           : '.item',      // class of individual news item
  *     'controlsDiv'    : '.controls',  // class of control link container
- *     'cycler'         : '.cycler',    // class of auto-cycle toggle
+ *     'cycler'         : true,    			// is auto-cycler on?
  *     'hoverClass'     : 'on',         // class for hovering over control links
  *           
  *     'cycleSpeed'     : 10000,        // speed, in milliseconds, of auto-cycler
@@ -43,7 +43,6 @@
  *		 <div class="item">News item #4.</div>
  *   </div>
  *   <div class="controls"></div>
- *   <input type="hidden" class="cycler" />
  * </div>
  * <script type="text/javascript">
  *   $("#newslist").newslist();
@@ -62,12 +61,13 @@
   $.init = function(container, options) {
 
     var $nl = $(container);
+		var cycler = true;
     
     var settings = {
       'itemsDiv'       : '.items',
       'item'           : '.item',
       'controlsDiv'    : '.controls',
-      'cycler'         : '.cycler',
+      'cycler'         : true,
       'hoverClass'     : 'on', 
       'cycleSpeed'     : 10000,
       'fadeSpeed'      : 1000,
@@ -106,10 +106,8 @@
     $controls.each(function() {
       $(this).click(function(e) {
         e.preventDefault();
-        // turn off cycler
-        $cycler.attr('value', 'false');
         // change current item to one associated with control link clicked
-        changeItemTo($items, $controls, $(this), settings.fadeSpeed);
+        changeItemTo(settings, $items, $controls, $(this));
       });
     });
         
@@ -124,15 +122,9 @@
     $items.eq(0).fadeIn(settings.fadeSpeed);
     $controls.eq(0).addClass("current");
     $itemsDiv.css("overflow", "hidden");
-
-    var $cycler = $(settings.cycler);
-    var maxLoops = (settings.maxLoops >= 0) ? (settings.maxLoops * ($items.length-1)) : -1;
-        
-    // turn on cycler
-    $cycler.attr('value', 'true');
         
     // start the cycle of items
-    cycleItems($items, $controls, $controls.eq(0), $cycler, settings.fadeSpeed, settings.cycleSpeed, 0, maxLoops);
+    cycleItems(settings, $items, $controls, $controls.eq(0), 0);
 
   };
 
@@ -141,20 +133,25 @@
   /****************************/
 
   // manual: click control link to change item; interrupts auto
-  function changeItemTo($items, $controls, link, fadeSpeed) {
+  function changeItemTo(settings, $items, $controls, link) {
     
+    // turn off cycler
+    settings.cycler = false;
     $items.hide();
-    $items.filter("#item" + link.attr("rel")).fadeIn(fadeSpeed);
+    $items.filter("#item" + link.attr("rel")).fadeIn(settings.fadeSpeed);
     $controls.removeClass("current");
     link.addClass("current");
   
   }
 
   // auto: cycle items
-  function cycleItems($items, $controls, $curControl, $cycler, fadeSpeed, cycleSpeed, curLoop, maxLoops) {
+  function cycleItems(settings, $items, $controls, $curControl, curLoop) {
+
+		console.log("curLoop", curLoop);
+		console.log("maxLoops", settings.maxLoops * $items.length-1);
 
     setTimeout(function() {          
-      if ( ((curLoop < maxLoops) || (maxLoops == -1)) && ($cycler.attr('value') !== 'false') ) {
+      if ( ((curLoop < (settings.maxLoops * $items.length-1)) || (settings.maxLoops == -1)) && settings.cycler ) {
         var curItemId = parseInt($curControl.attr("rel"));
         var nextItemId = curItemId + 1;
 
@@ -166,16 +163,17 @@
         $items.hide();
 
         // show next item in list
-        $items.filter("#item" + nextItemId).fadeIn(fadeSpeed);
+        $items.filter("#item" + nextItemId).fadeIn(settings.fadeSpeed);
         // remove highlight of all controls
         $controls.removeClass("current");
         // add it to the next one
         $controls.filter("#control" + nextItemId).addClass("current");
 
         // recursively call function again
-        cycleItems($items, $controls, $controls.eq(curItemId), $cycler, fadeSpeed, cycleSpeed, curLoop + 1, maxLoops);
+        cycleItems(settings, $items, $controls, $controls.eq(curItemId), curLoop + 1);
       }
-    }, cycleSpeed);
-  };
+    }, settings.cycleSpeed);
+  
+	}
 
 })(jQuery);
