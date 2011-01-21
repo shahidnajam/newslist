@@ -27,8 +27,8 @@
  *           
  *     'cycleSpeed'     : 10000,        // speed, in milliseconds, of auto-cycler
  *     'fadeSpeed'      : 1000,         // speed, in milliseconds, for news item to fade in
- *     'maxLoops'       : -1,           // number of times the whole slideshow should loop; 
- *                                         if non-positive integer, will loop indefinitely
+ *     'maxLoops'       : null,         // number of times the whole slideshow should loop; 
+ *                                         if null, will loop indefinitely
  *           
  *     'leadZero'       : false         // should the control links use a leading zero for items 1-9?
  *   });
@@ -71,7 +71,7 @@
       'hoverClass'     : 'on', 
       'cycleSpeed'     : 10000,
       'fadeSpeed'      : 1000,
-      'maxLoops'       : -1,      
+      'maxLoops'       : null,      
       'leadZero'       : false            
     };
 
@@ -103,12 +103,9 @@
     var $controls = $controlsDiv.children("a"); // grab all control links
         
     // attach click event to all control links
-    $controls.each(function() {
-      $(this).click(function(e) {
-        e.preventDefault();
-        // change current item to one associated with control link clicked
-        changeItemTo(settings, $items, $controls, $(this));
-      });
+    $controls.click(function(e) {
+	  	e.preventDefault();
+      changeItemTo(settings, $items, $controls, $(this));
     });
         
     // attach hover event to all control links
@@ -151,7 +148,7 @@
 		console.log("maxLoops", settings.maxLoops * $items.length-1);
 
     setTimeout(function() {          
-      if ( ((curLoop < (settings.maxLoops * $items.length-1)) || (settings.maxLoops == -1)) && settings.cycler ) {
+      if ( ((curLoop < (settings.maxLoops * $items.length-1)) || (settings.maxLoops == null)) && settings.cycler ) {
         var curItemId = parseInt($curControl.attr("rel"));
         var nextItemId = curItemId + 1;
 
