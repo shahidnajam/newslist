@@ -62,9 +62,12 @@
   // initialize all components and start item cycle
   $.init = function(container, options) {
 
-    var $nl = $(container);
-    
-    var defaults = {
+		var $itemsDiv, $items, $controlsDiv, $controls;
+		var defaults, settings, cycleOps = [];
+		var i;
+		   
+		// create default options
+    defaults = {
       'itemsDiv'       	: '.items',
       'item'           	: '.item',
       'controlsDiv'    	: '.controls',
@@ -76,23 +79,23 @@
       'leadZero'       	: false
     };
 
-    // customize settings if args exist
+    // create global settings from defaults and user overrides
     if (options) {
       settings = $.extend({}, defaults, options);
     }
 
-    var $itemsDiv = $nl.find(settings.itemsDiv); // grab div with items in it
-    var $items = $nl.find(settings.item); // grab all items
-    var $controlsDiv = $nl.find(settings.controlsDiv); // grab div with control links
+    $itemsDiv = $(container).find(settings.itemsDiv); // grab div with items in it
+    $items = $(container).find(settings.item); // grab all items
+    $controlsDiv = $(container).find(settings.controlsDiv); // grab div with control links
     
-		var cycleOps = {
+		cycleOps = {
 			'init'				  	: 1,
 			'cur'							: 1,
 			'total'						: settings.maxLoops * $items.length-1
 		};
   
     // attach ids to all items
-    var i = 1;
+    i = 1;
     $items.each(function() {
       $(this).attr("id", "item" + i++);
     });
@@ -106,8 +109,7 @@
       }
       $controlsDiv.append("<a rel=\"" + i + "\" id=\"control" + i + "\" href=\"#" + i + "\">" + itext + "</a>");
     }
-
-    var $controls = $controlsDiv.children("a"); // grab all control links
+    $controls = $controlsDiv.children("a"); // grab all control links
         
     // attach click event to all control links
     $controls.click(function(e) {
