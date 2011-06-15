@@ -4,7 +4,7 @@ h1. News List
 
 h2. Usage
 
-First, include the jQuery library, <code>jquery.newslist.js</code>, <code>newslist.css</code> in your <code><head></code> tag:
+First, include the jQuery library, @jquery.newslist.js@, @newslist.css@ in your @<head>@ tag:
 
 <pre><code><link type="text/css" href="/css/newslist.css" rel="stylesheet" media="screen"/>
 <script type="text/javascript" src="/js/jquery.newslist.js"></script></code></pre>
