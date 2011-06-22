@@ -131,7 +131,7 @@
 			function() {
 				cycleItems(settings, cycleOps, $items, $controls);
 			}, 
-			settings.cycleSpeed
+			settings.cycleSpeed;
 		);
 
   };
